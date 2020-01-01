@@ -1,11 +1,11 @@
 {
   "games": [
     {
-      "name": "Mario Goat",
+      "name": "New Super Luckys Tale",
       "cover": "https://raw.githubusercontent.com/pi-xy/test/master/luckys.jpg"
     },
     {
-     "name" : "Crazy Chicken",
+     "name" : "Bake 'n Switch",
      "cover": "https://raw.githubusercontent.com/pi-xy/test/master/bakenswitch.jpg"
     }
   ]
