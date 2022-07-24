@@ -40,20 +40,16 @@ Rectangle {
     function start() {
         stage.visible = true
         timer.running = true
-       if (parent.objectName == "Main") {
-            main.score.visible = true
-            main.ships.visible = true
-        }
+        main.score.visible = true
+        main.ships.visible = true
     }
 
     function stop() {
         stage.visible = false
         timer.running = false
-        if (parent.objectName == "Main") {
-            main.score.visible = false
-            main.ships.visible = false
-            main.displayHighScore()
-        }
+        main.score.visible = false
+        main.ships.visible = false
+        main.displayHighScore()
     }
 
     function vaderLaserAtPoint(point) {
@@ -62,9 +58,7 @@ Rectangle {
             point.y >= ship.y &&
             point.y <= ship.y + ship.height) {
                 if (!ship.dead) {
-                    if (parent.objectName == "Main") {
-                        main.lives--
-                    }
+                    main.lives--
                 }
                 ship.hit()
                 return true
@@ -82,9 +76,7 @@ Rectangle {
                     if (!hit) {
                         vader.hit()
                         hit = true
-                        if (parent.objectName == "Main") {
-                            main.score.updateScore(100)
-                        }
+                        main.score.updateScore(100)
                     }
                 }
             });
@@ -215,7 +207,6 @@ Rectangle {
             }
            return true
         })
-
         return allDead
     }
 
@@ -235,10 +226,8 @@ Rectangle {
             killVadersOffScreen()
             if (allVadersDead()) {
                 timer.running = false
-                if (parent.objectName == "Main") {
-                    main.stage.ship.visible = false
-                    main.stageOutro.startAnimation()
-                }
+                main.stage.ship.visible = false
+                main.stageOutro.startAnimation()
             }
         }
     }
