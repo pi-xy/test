@@ -228,8 +228,10 @@ Rectangle {
             killVadersOffScreen()
             if (allVadersDead()) {
                 timer.running = false
-                main.stage.ship.visible = false
-                main.stageOutro.startAnimation()
+                if (parent.objectName == "Main") {
+                    main.stage.ship.visible = false
+                    main.stageOutro.startAnimation()
+                }
             }
         }
     }

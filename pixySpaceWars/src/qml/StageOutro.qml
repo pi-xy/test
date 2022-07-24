@@ -27,11 +27,11 @@ Rectangle {
         id: letsGo
         visible: fontloaderAnton.status == FontLoader.Ready
         anchors.centerIn: stageOutro
-        text: "STAGE OVER!"
+        text: "STAGE CLEARED"
         font.letterSpacing: (stageOutro.width * 0.170) * 0.04
         color: "#ffffff"
         font.family: fontloaderAnton.name
-        font.pixelSize: stageOutro.width * 0.18
+        font.pixelSize: stageOutro.width * 0.14
         opacity: 0.85
         scale: 0
     }
