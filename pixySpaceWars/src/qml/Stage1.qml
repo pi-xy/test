@@ -28,7 +28,7 @@ Rectangle {
         vaders = vaders.concat(vadersC)
         vaders = vaders.concat(vadersD)
 
-        if (parent.objectName !="Main") {
+        if (parent.objectName != "Main") {
             start()
         }
     }
@@ -40,7 +40,7 @@ Rectangle {
     function start() {
         stage.visible = true
         timer.running = true
-        if (typeof main !== 'undefined') {
+       if (parent.objectName == "Main") {
             main.score.visible = true
             main.ships.visible = true
         }
@@ -49,9 +49,11 @@ Rectangle {
     function stop() {
         stage.visible = false
         timer.running = false
-        main.score.visible = false
-        main.ships.visible = false
-        main.displayHighScore()
+        if (parent.objectName == "Main") {
+            main.score.visible = false
+            main.ships.visible = false
+            main.displayHighScore()
+        }
     }
 
     function vaderLaserAtPoint(point) {
@@ -60,7 +62,9 @@ Rectangle {
             point.y >= ship.y &&
             point.y <= ship.y + ship.height) {
                 if (!ship.dead) {
-                    main.lives--
+                    if (parent.objectName == "Main") {
+                        main.lives--
+                    }
                 }
                 ship.hit()
                 return true
@@ -78,11 +82,12 @@ Rectangle {
                     if (!hit) {
                         vader.hit()
                         hit = true
-                        main.score.updateScore(100)
+                        if (parent.objectName == "Main") {
+                            main.score.updateScore(100)
+                        }
                     }
-            }
-        });
-
+                }
+            });
         return hit
     }
 
@@ -184,7 +189,9 @@ Rectangle {
     function determineIfVaderTouchingShip() {
         vaders.every(function (vader) {
             if (!vader.dead && thingsIntersect(vader, ship)) {
-                main.lives = 0
+                if (parent.objectName == "Main") {
+                    main.lives = 0
+                }
                 ship.hit()
             }
            return true

@@ -1,4 +1,5 @@
 Main Main.qml
+Thumb Thumb.qml
 Lives Lives.qml
 Score Score.qml
 MainBackground MainBackground.qml
