@@ -20,10 +20,10 @@ Rectangle {
     property var vadersD: []
 
     Component.onCompleted: {
-        vadersA.push(v5A, v4A, v1A, v2A, v3A)
-        vadersB.push(v5B, v4B, v1B, v2B, v3B)
-        vadersC.push(v5C, v4C, v1C, v2C, v3C)
-        vadersD.push(v5D, v4D, v1D, v2D, v3D)
+        vadersA.push(v6A, v5A, v4A, v1A, v2A, v3A, v7A)
+        vadersB.push(v6B, v5B, v4B, v1B, v2B, v3B, v7B)
+        vadersC.push(v6C, v5C, v4C, v1C, v2C, v3C, v7C)
+        vadersD.push(v6D, v5D, v4D, v1D, v2D, v3D, v7D)
         vaders = vadersA.concat(vadersB)
         vaders = vaders.concat(vadersC)
         vaders = vaders.concat(vadersD)
@@ -40,16 +40,20 @@ Rectangle {
     function start() {
         stage.visible = true
         timer.running = true
-        main.score.visible = true
-        main.ships.visible = true
+        if (stage.parent.objectName == "Main") {
+            main.score.visible = true
+            main.ships.visible = true
+        }
     }
 
     function stop() {
         stage.visible = false
         timer.running = false
-        main.score.visible = false
-        main.ships.visible = false
-        main.displayHighScore()
+        if (stage.parent.objectName == "Main") {
+            main.score.visible = false
+            main.ships.visible = false
+            main.displayHighScore()
+        }
     }
 
     function vaderLaserAtPoint(point) {
@@ -58,7 +62,9 @@ Rectangle {
             point.y >= ship.y &&
             point.y <= ship.y + ship.height) {
                 if (!ship.dead) {
-                    main.lives--
+                    if (stage.parent.objectName == "Main") {
+                        main.lives--
+                    }
                 }
                 ship.hit()
                 return true
@@ -76,7 +82,9 @@ Rectangle {
                     if (!hit) {
                         vader.hit()
                         hit = true
-                        main.score.updateScore(100)
+                        if (stage.parent.objectName == "Main") {
+                            main.score.updateScore(100)
+                        }
                     }
                 }
             });
@@ -181,7 +189,7 @@ Rectangle {
     function determineIfVaderTouchingShip() {
         vaders.every(function (vader) {
             if (!vader.dead && thingsIntersect(vader, ship)) {
-                if (parent.objectName == "Main") {
+                if (stage.parent.objectName == "Main") {
                     main.lives = 0
                 }
                 ship.hit()
@@ -210,6 +218,24 @@ Rectangle {
         return allDead
     }
 
+    function undeadVadersCount() {
+        return vaders.filter(v => !v.dead).length
+    }
+
+    function undeadVaders() {
+        return vaders.filter(v => !v.dead)
+    }
+
+    function randomlyFireVaderLaser() {
+        var vadersAliveCount = undeadVadersCount()
+        if (vadersAliveCount == 0) { return }
+        var rnd = Math.floor(Math.random() * vadersAliveCount)
+        var shouldFire = Math.random() < 0.90
+        if (shouldFire) {
+            undeadVaders()[rnd].createLaser()
+        }
+    }
+
     Timer {
         id: timer
         interval: stage.vaderInterval
@@ -221,13 +247,16 @@ Rectangle {
             moveVadersB()
             moveVadersC()
             moveVadersD()
+            randomlyFireVaderLaser()            
             determineVaderDirectionAndSpeed()
             determineIfVaderTouchingShip()
             killVadersOffScreen()
-            if (allVadersDead()) {
+            if (allVadersDead()) {  
                 timer.running = false
-                main.stage.ship.visible = false
-                main.stageOutro.startAnimation()
+                if (stage.parent.objectName == "Main") {
+                    main.stage.ship.visible = false
+                    main.stageOutro.startAnimation()
+                }
             }
         }
     }
@@ -249,6 +278,12 @@ Rectangle {
         x: v2A.x + Math.ceil((width * 1.33))
         y: v1A.y
     }
+
+    BlueVader {
+        id: v7A
+        x: v3A.x + Math.ceil((width * 1.33))
+        y: v1A.y
+    }
     
     BlueVader {
         id: v4A
@@ -259,6 +294,12 @@ Rectangle {
     BlueVader {
         id: v5A
         x: v4A.x - Math.ceil((width * 1.33))
+        y: v1A.y
+    }
+
+    BlueVader {
+        id: v6A
+        x: v5A.x - Math.ceil((width * 1.33))
         y: v1A.y
     }
 
@@ -288,6 +329,15 @@ Rectangle {
             NumberAnimation { duration: 20 }
         }
     }
+
+    BlueVader {
+        id: v7B
+        x: v3B.x + Math.ceil((width * 1.33))
+        y: v1B.y
+        Behavior on x {
+            NumberAnimation { duration: 20 }
+        }
+    }
     
     BlueVader {
         id: v4B
@@ -301,6 +351,15 @@ Rectangle {
     BlueVader {
         id: v5B
         x: v4B.x - Math.ceil((width * 1.33))
+        y: v1B.y
+        Behavior on x {
+            NumberAnimation { duration: 20 }
+        }
+    }
+
+    BlueVader {
+        id: v6B
+        x: v5B.x - Math.ceil((width * 1.33))
         y: v1B.y
         Behavior on x {
             NumberAnimation { duration: 20 }
@@ -324,6 +383,12 @@ Rectangle {
         x: v2C.x + Math.ceil((width * 1.33))
         y: v1C.y
     }
+
+    YellowVader {
+        id: v7C
+        x: v3C.x + Math.ceil((width * 1.33))
+        y: v1C.y
+    }
     
     YellowVader {
         id: v4C
@@ -334,6 +399,12 @@ Rectangle {
     YellowVader {
         id: v5C
         x: v4C.x - Math.ceil((width * 1.33))
+        y: v1C.y
+    }
+
+    YellowVader {
+        id: v6C
+        x: v5C.x - Math.ceil((width * 1.33))
         y: v1C.y
     }
 
@@ -354,6 +425,12 @@ Rectangle {
         x: v2D.x + Math.ceil((width * 1.33))
         y: v1D.y
     }
+
+     OrangeVader {
+        id: v7D
+        x: v3D.x + Math.ceil((width * 1.33))
+        y: v1D.y
+    }
     
     OrangeVader {
         id: v4D
@@ -364,6 +441,12 @@ Rectangle {
     OrangeVader {
         id: v5D
         x: v4D.x - Math.ceil((width * 1.33))
+        y: v1D.y
+    }
+
+     OrangeVader {
+        id: v6D
+        x: v5D.x - Math.ceil((width * 1.33))
         y: v1D.y
     }
 

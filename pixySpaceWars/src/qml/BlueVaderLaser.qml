@@ -19,7 +19,7 @@ Rectangle {
                 laser.destroy()
             } else {
                 if (laser.y < canvas.height) {
-                    laser.y += Math.ceil(canvas.height * 0.0005)
+                    laser.y += Math.ceil(canvas.height * 0.005)
                 } else {
                     laser.destroy()
                 }

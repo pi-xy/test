@@ -104,7 +104,6 @@ Rectangle {
 
     Component.onCompleted: {
         player.play()
-        //displayHighScore()        
     } 
 
     MediaPlayer {

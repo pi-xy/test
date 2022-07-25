@@ -13,7 +13,8 @@ Rectangle {
     property bool dead : false
 
     BlueVaderLaser { visible: false }
-    function createLaser(width) {
+    function createLaser() {
+        var width = Math.ceil(parent.width * 0.007)
         var c = Qt.createComponent("BlueVaderLaser.qml")  
         var b = c.createObject(vader.parent, {
             "x": Math.ceil((vader.x + (vader.width / 2)) - (width / 2)) - 2,
@@ -31,9 +32,9 @@ Rectangle {
         repeat: true
 
         onTriggered: {
-            var rnd = Math.floor(Math.random() * 40)
+            var rnd = Math.floor(Math.random() * 20)
             if (!dead && vader.parent.started() && rnd == 1) {
-                createLaser(Math.ceil(parent.width * 0.07))
+                //createLaser(Math.ceil(parent.width * 0.07))
             }
         }
     }

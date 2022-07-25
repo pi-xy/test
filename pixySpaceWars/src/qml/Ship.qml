@@ -61,7 +61,8 @@ Rectangle {
             var secondsHeld = (pixyEngine.frameNumber() -
             fireButtonDownFrame) / pixyEngine.fps()
 
-            createLaser(secondsHeld * 15)
+            //createLaser(secondsHeld * 15)
+            createLaser(4)
         }
     }
 
